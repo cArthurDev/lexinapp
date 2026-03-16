@@ -3,8 +3,6 @@ import {
   Save,
   Download,
   LogOut,
-  Sun,
-  Moon,
   Check,
   Type,
   ArrowLeft,
@@ -45,7 +43,6 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
   const [view, setView] = useState<View>("board");
   const [activeModuleId, setActiveModuleId] = useState<string | null>(null);
   const [activePageId, setActivePageId] = useState<string | null>(null);
-  const [dark, setDark] = useState(false);
   const [serifMode, setSerifMode] = useState(false);
   const [saved, setSaved] = useState(true);
   const [toolbarPos, setToolbarPos] = useState<{ top: number; left: number } | null>(null);
@@ -54,7 +51,6 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
   const activeModule = modules.find((m) => m.id === activeModuleId) || null;
   const modulePages = activeModuleId ? pages.filter((p) => p.moduleId === activeModuleId) : [];
 
-  useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
   useEffect(() => { document.documentElement.classList.toggle("font-serif-mode", serifMode); }, [serifMode]);
 
   // Board actions
@@ -235,9 +231,6 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
           )}
           <button onClick={() => setSerifMode(!serifMode)} title="Fonte serif" className="p-1.5 rounded hover:bg-accent text-muted-foreground transition-colors">
             <Type className="w-4 h-4" />
-          </button>
-          <button onClick={() => setDark(!dark)} className="p-1.5 rounded hover:bg-accent text-muted-foreground transition-colors">
-            {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
           <button onClick={handleLogout} title="Sair" className="p-1.5 rounded hover:bg-accent text-muted-foreground transition-colors">
             <LogOut className="w-4 h-4" />
