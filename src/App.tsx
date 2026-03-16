@@ -1,27 +1,27 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useState } from "react";
+import { isLoggedIn } from "@/lib/auth";
+import LoginPage from "@/pages/LoginPage";
+import Workspace from "@/pages/Workspace";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index.tsx";
-import NotFound from "./pages/NotFound.tsx";
 
-const queryClient = new QueryClient();
+const App: React.FC = () => {
+  const [authed, setAuthed] = useState(isLoggedIn());
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
+  if (!authed) {
+    return (
+      <>
+        <Sonner />
+        <LoginPage onLogin={() => setAuthed(true)} />
+      </>
+    );
+  }
+
+  return (
+    <>
       <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+      <Workspace onLogout={() => setAuthed(false)} />
+    </>
+  );
+};
 
 export default App;
