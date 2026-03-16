@@ -152,6 +152,10 @@
   @apply border-l-4 border-muted-foreground/30 pl-4 italic text-muted-foreground my-2;
 }
 
+.notion-editor img {
+  @apply max-w-full h-auto my-3 rounded-lg;
+}
+
 /* Floating toolbar animation */
 .floating-toolbar {
   animation: toolbar-in 0.12s ease-out;

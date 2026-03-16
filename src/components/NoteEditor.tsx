@@ -1,4 +1,6 @@
 import React, { useRef, useEffect, useCallback } from "react";
+import { ImagePlus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface NoteEditorProps {
   content: string;
@@ -22,6 +24,7 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
   onSelectionChange,
 }) => {
   const editorRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [showEmojiPicker, setShowEmojiPicker] = React.useState(false);
   const contentRef = useRef(content);
 
@@ -40,6 +43,33 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
     }
   }, [onChange]);
 
+  const insertImageFromDataUrl = useCallback((dataUrl: string) => {
+    if (!editorRef.current) return;
+    editorRef.current.focus();
+    const imageHtml = `<p><img src="${dataUrl}" alt="Imagem" style="max-width:100%;height:auto;border-radius:8px;" /></p><p></p>`;
+    document.execCommand("insertHTML", false, imageHtml);
+    const html = editorRef.current.innerHTML;
+    contentRef.current = html;
+    onChange(html);
+  }, [onChange]);
+
+  const handleImageFile = useCallback((file: File) => {
+    if (!file.type.startsWith("image/")) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = typeof reader.result === "string" ? reader.result : "";
+      if (!dataUrl) return;
+      insertImageFromDataUrl(dataUrl);
+    };
+    reader.readAsDataURL(file);
+  }, [insertImageFromDataUrl]);
+
+  const handleImageInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) handleImageFile(file);
+    e.target.value = "";
+  }, [handleImageFile]);
+
   const handleMouseUp = useCallback(() => {
     const sel = window.getSelection();
     if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
@@ -55,6 +85,28 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
     if (e.key === "Tab") {
       e.preventDefault();
       document.execCommand("insertHTML", false, "&nbsp;&nbsp;&nbsp;&nbsp;");
+    }
+  }, []);
+
+  const handlePaste = useCallback((e: React.ClipboardEvent<HTMLDivElement>) => {
+    const files = Array.from(e.clipboardData.files);
+    const imageFile = files.find((file) => file.type.startsWith("image/"));
+    if (!imageFile) return;
+    e.preventDefault();
+    handleImageFile(imageFile);
+  }, [handleImageFile]);
+
+  const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    const files = Array.from(e.dataTransfer.files);
+    const imageFile = files.find((file) => file.type.startsWith("image/"));
+    if (!imageFile) return;
+    e.preventDefault();
+    handleImageFile(imageFile);
+  }, [handleImageFile]);
+
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    if (Array.from(e.dataTransfer.types).includes("Files")) {
+      e.preventDefault();
     }
   }, []);
 
@@ -95,6 +147,24 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
             className="w-full text-4xl font-bold bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground"
             placeholder="Sem título"
           />
+          <div className="mt-3">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="gap-1.5"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <ImagePlus className="w-4 h-4" /> Imagem
+            </Button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageInputChange}
+            />
+          </div>
         </div>
 
         {/* ContentEditable Editor */}
@@ -108,6 +178,9 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
           onMouseUp={handleMouseUp}
           onKeyUp={handleMouseUp}
           onKeyDown={handleKeyDown}
+          onPaste={handlePaste}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
         />
       </div>
     </div>
