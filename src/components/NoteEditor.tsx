@@ -26,7 +26,7 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
   const contentRef = useRef(content);
 
   useEffect(() => {
-    if (editorRef.current && contentRef.current !== content) {
+    if (editorRef.current && editorRef.current.innerHTML !== content) {
       editorRef.current.innerHTML = content;
       contentRef.current = content;
     }

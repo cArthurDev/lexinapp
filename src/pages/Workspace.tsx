@@ -104,12 +104,15 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
 
   // Editor actions
   const handleSave = useCallback(() => {
-    if (activePage) {
-      savePage(activePage);
+    if (activePageId) {
+      const currentPage = pages.find((p) => p.id === activePageId);
+      if (!currentPage) return;
+      savePage(currentPage);
+      setPages(getPages());
       setSaved(true);
       toast.success("Salvo com sucesso!");
     }
-  }, [activePage]);
+  }, [activePageId, pages]);
 
   const handleContentChange = useCallback((html: string) => {
     if (!activePage) return;
@@ -155,8 +158,11 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
   const handleBack = () => {
     if (view === "editor") {
       // Save before going back
-      if (activePage && !saved) {
-        savePage(activePage);
+      if (activePageId && !saved) {
+        const currentPage = pages.find((p) => p.id === activePageId);
+        if (currentPage) {
+          savePage(currentPage);
+        }
         setPages(getPages());
       }
       setView("module");
