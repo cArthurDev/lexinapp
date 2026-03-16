@@ -31,7 +31,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
           <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center mb-4">
             <FileText className="w-6 h-6 text-primary-foreground" />
           </div>
-          <h1 className="text-2xl font-semibold text-foreground">Workspace</h1>
+          <h1 className="text-2xl font-semibold text-foreground">Lexin</h1>
           <p className="text-sm text-muted-foreground mt-1">Entre para continuar</p>
         </div>
 
