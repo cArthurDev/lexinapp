@@ -71,7 +71,7 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
               {icon}
             </button>
             {showEmojiPicker && (
-              <div className="absolute top-full left-0 mt-1 bg-popover border border-border rounded-lg shadow-lg p-2 grid grid-cols-8 gap-1 z-50">
+              <div className="absolute top-full left-0 mt-2 bg-popover border border-border rounded-xl shadow-lg p-3 grid grid-cols-4 gap-2 z-50 min-w-[220px]">
                 {EMOJIS.map((emoji) => (
                   <button
                     key={emoji}
@@ -79,7 +79,8 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
                       onIconChange(emoji);
                       setShowEmojiPicker(false);
                     }}
-                    className="text-xl p-1 rounded hover:bg-accent transition-colors"
+                    className="text-2xl h-11 w-11 rounded-lg border border-border/70 hover:bg-accent hover:border-primary/40 transition-colors"
+                    aria-label={`Selecionar ícone ${emoji}`}
                   >
                     {emoji}
                   </button>
