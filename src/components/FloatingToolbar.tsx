@@ -35,15 +35,15 @@ const TEXT_COLORS = [
 ];
 
 const BG_COLORS = [
-  { label: "Nenhum", value: "transparent" },
-  { label: "Amarelo", css: "hsl(45, 93%, 90%)" },
-  { label: "Azul", css: "hsl(210, 100%, 93%)" },
-  { label: "Verde", css: "hsl(140, 60%, 90%)" },
-  { label: "Rosa", css: "hsl(330, 80%, 93%)" },
-  { label: "Roxo", css: "hsl(270, 60%, 93%)" },
-  { label: "Laranja", css: "hsl(25, 90%, 92%)" },
-  { label: "Vermelho", css: "hsl(0, 80%, 93%)" },
-  { label: "Cinza", css: "hsl(0, 0%, 93%)" },
+  { label: "Nenhum", value: "transparent", css: "transparent" },
+  { label: "Amarelo", value: "", css: "hsl(45, 93%, 90%)" },
+  { label: "Azul", value: "", css: "hsl(210, 100%, 93%)" },
+  { label: "Verde", value: "", css: "hsl(140, 60%, 90%)" },
+  { label: "Rosa", value: "", css: "hsl(330, 80%, 93%)" },
+  { label: "Roxo", value: "", css: "hsl(270, 60%, 93%)" },
+  { label: "Laranja", value: "", css: "hsl(25, 90%, 92%)" },
+  { label: "Vermelho", value: "", css: "hsl(0, 80%, 93%)" },
+  { label: "Cinza", value: "", css: "hsl(0, 0%, 93%)" },
 ];
 
 const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
@@ -106,16 +106,15 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
           <Palette className="w-4 h-4" />
         </ToolBtn>
         {showTextColors && (
-          <div className="absolute top-full left-0 mt-1 bg-popover border border-border rounded-lg shadow-lg p-2 grid grid-cols-3 gap-1 min-w-[140px]">
+          <div className="absolute top-full left-0 mt-1 bg-popover border border-border rounded-lg shadow-lg p-2 grid grid-cols-5 gap-1.5">
             {TEXT_COLORS.map((c) => (
               <button
                 key={c.value}
                 onClick={() => { exec("foreColor", c.value); setShowTextColors(false); }}
-                className="flex items-center gap-1.5 px-2 py-1 rounded text-xs hover:bg-accent transition-colors"
-              >
-                <span className="w-3 h-3 rounded-full border border-border" style={{ backgroundColor: c.value === "inherit" ? "currentColor" : c.value }} />
-                {c.label}
-              </button>
+                title={c.label}
+                className="w-6 h-6 rounded-full border-2 border-border hover:border-primary hover:scale-110 transition-all"
+                style={{ backgroundColor: c.value === "inherit" ? "currentColor" : c.value }}
+              />
             ))}
           </div>
         )}
@@ -130,16 +129,15 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
           <Highlighter className="w-4 h-4" />
         </ToolBtn>
         {showBgColors && (
-          <div className="absolute top-full right-0 mt-1 bg-popover border border-border rounded-lg shadow-lg p-2 grid grid-cols-3 gap-1 min-w-[140px]">
+          <div className="absolute top-full right-0 mt-1 bg-popover border border-border rounded-lg shadow-lg p-2 grid grid-cols-5 gap-1.5">
             {BG_COLORS.map((c) => (
               <button
                 key={c.label}
-                onClick={() => { exec("hiliteColor", c.css || c.value); setShowBgColors(false); }}
-                className="flex items-center gap-1.5 px-2 py-1 rounded text-xs hover:bg-accent transition-colors"
-              >
-                <span className="w-3 h-3 rounded border border-border" style={{ backgroundColor: c.css || c.value }} />
-                {c.label}
-              </button>
+                onClick={() => { exec("hiliteColor", c.css); setShowBgColors(false); }}
+                title={c.label}
+                className="w-6 h-6 rounded-full border-2 border-border hover:border-primary hover:scale-110 transition-all"
+                style={{ backgroundColor: c.css }}
+              />
             ))}
           </div>
         )}
