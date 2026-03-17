@@ -12,6 +12,10 @@ import {
   Quote,
   Palette,
   Highlighter,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  AlignJustify,
 } from "lucide-react";
 
 interface FloatingToolbarProps {
@@ -56,6 +60,11 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
     document.execCommand("formatBlock", false, tag);
   };
 
+  const closeDropdowns = () => {
+    setShowTextColors(false);
+    setShowBgColors(false);
+  };
+
   return (
     <div
       className="floating-toolbar fixed z-50 bg-popover border border-border rounded-lg shadow-lg flex items-center gap-0.5 px-1 py-1"
@@ -77,6 +86,14 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
       <ToolBtn onClick={() => exec("insertUnorderedList")} title="Lista"><List className="w-4 h-4" /></ToolBtn>
       <ToolBtn onClick={() => exec("insertOrderedList")} title="Lista numerada"><ListOrdered className="w-4 h-4" /></ToolBtn>
       <ToolBtn onClick={() => formatBlock("blockquote")} title="Citação"><Quote className="w-4 h-4" /></ToolBtn>
+
+      <div className="w-px h-5 bg-border mx-0.5" />
+
+      {/* Alignment */}
+      <ToolBtn onClick={() => exec("justifyLeft")} title="Alinhar à esquerda"><AlignLeft className="w-4 h-4" /></ToolBtn>
+      <ToolBtn onClick={() => exec("justifyCenter")} title="Centralizar"><AlignCenter className="w-4 h-4" /></ToolBtn>
+      <ToolBtn onClick={() => exec("justifyRight")} title="Alinhar à direita"><AlignRight className="w-4 h-4" /></ToolBtn>
+      <ToolBtn onClick={() => exec("justifyFull")} title="Justificar"><AlignJustify className="w-4 h-4" /></ToolBtn>
 
       <div className="w-px h-5 bg-border mx-0.5" />
 
