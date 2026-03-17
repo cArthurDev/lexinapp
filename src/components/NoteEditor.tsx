@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useCallback } from "react";
-import { ImagePlus } from "lucide-react";
+import React, { useRef, useEffect, useCallback, useState } from "react";
+import { ImagePlus, Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
 
 interface NoteEditorProps {
   content: string;
@@ -14,6 +15,13 @@ interface NoteEditorProps {
 
 const EMOJIS = ["📄", "📝", "📌", "📎", "📒", "📕", "📗", "📘", "📙", "🗂️", "💡", "🎯", "🚀", "⭐", "🔥", "💻"];
 
+const MARGIN_STEPS = [
+  { label: "Estreita", value: "max-w-5xl", px: "px-4" },
+  { label: "Padrão", value: "max-w-3xl", px: "px-6" },
+  { label: "Média", value: "max-w-2xl", px: "px-8" },
+  { label: "Larga", value: "max-w-xl", px: "px-10" },
+];
+
 const NoteEditor: React.FC<NoteEditorProps> = ({
   content,
   onChange,
@@ -25,7 +33,8 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
 }) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [showEmojiPicker, setShowEmojiPicker] = React.useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [marginIndex, setMarginIndex] = useState(1);
   const contentRef = useRef(content);
 
   useEffect(() => {
@@ -110,9 +119,45 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
     }
   }, []);
 
+  const currentMargin = MARGIN_STEPS[marginIndex];
+
   return (
     <div className="flex-1 overflow-y-auto">
-      <div className="max-w-3xl mx-auto px-6 py-12">
+      {/* Margin control bar */}
+      <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b border-border">
+        <div className={`${currentMargin.value} mx-auto flex items-center gap-3 px-6 py-1.5`}>
+          <span className="text-xs text-muted-foreground whitespace-nowrap">Margem</span>
+          <button
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => setMarginIndex(Math.max(0, marginIndex - 1))}
+            disabled={marginIndex === 0}
+            className="p-0.5 rounded hover:bg-accent text-muted-foreground disabled:opacity-30 transition-colors"
+          >
+            <Minus className="w-3.5 h-3.5" />
+          </button>
+          <div className="w-24">
+            <Slider
+              value={[marginIndex]}
+              min={0}
+              max={MARGIN_STEPS.length - 1}
+              step={1}
+              onValueChange={([v]) => setMarginIndex(v)}
+              className="cursor-pointer"
+            />
+          </div>
+          <button
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => setMarginIndex(Math.min(MARGIN_STEPS.length - 1, marginIndex + 1))}
+            disabled={marginIndex === MARGIN_STEPS.length - 1}
+            className="p-0.5 rounded hover:bg-accent text-muted-foreground disabled:opacity-30 transition-colors"
+          >
+            <Plus className="w-3.5 h-3.5" />
+          </button>
+          <span className="text-xs text-muted-foreground">{currentMargin.label}</span>
+        </div>
+      </div>
+
+      <div className={`${currentMargin.value} mx-auto ${currentMargin.px} py-12 transition-all duration-200`}>
         {/* Icon + Title */}
         <div className="mb-6">
           <div className="relative inline-block mb-2">
