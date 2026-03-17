@@ -106,16 +106,15 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
           <Palette className="w-4 h-4" />
         </ToolBtn>
         {showTextColors && (
-          <div className="absolute top-full left-0 mt-1 bg-popover border border-border rounded-lg shadow-lg p-2 grid grid-cols-3 gap-1 min-w-[140px]">
+          <div className="absolute top-full left-0 mt-1 bg-popover border border-border rounded-lg shadow-lg p-2 grid grid-cols-5 gap-1.5">
             {TEXT_COLORS.map((c) => (
               <button
                 key={c.value}
                 onClick={() => { exec("foreColor", c.value); setShowTextColors(false); }}
-                className="flex items-center gap-1.5 px-2 py-1 rounded text-xs hover:bg-accent transition-colors"
-              >
-                <span className="w-3 h-3 rounded-full border border-border" style={{ backgroundColor: c.value === "inherit" ? "currentColor" : c.value }} />
-                {c.label}
-              </button>
+                title={c.label}
+                className="w-6 h-6 rounded-full border-2 border-border hover:border-primary hover:scale-110 transition-all"
+                style={{ backgroundColor: c.value === "inherit" ? "currentColor" : c.value }}
+              />
             ))}
           </div>
         )}
