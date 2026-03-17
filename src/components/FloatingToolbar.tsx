@@ -135,7 +135,7 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
                 key={c.label}
                 onClick={() => { exec("hiliteColor", c.css); setShowBgColors(false); }}
                 title={c.label}
-                className="w-6 h-6 rounded-full border-2 border-border hover:border-primary hover:scale-110 transition-all"
+                className="w-7 h-7 rounded-full border-2 border-border hover:border-primary hover:scale-110 transition-all"
                 style={{ backgroundColor: c.css }}
               />
             ))}
