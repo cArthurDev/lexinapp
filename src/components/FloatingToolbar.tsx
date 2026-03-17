@@ -35,15 +35,15 @@ const TEXT_COLORS = [
 ];
 
 const BG_COLORS = [
-  { label: "Nenhum", value: "transparent" },
-  { label: "Amarelo", css: "hsl(45, 93%, 90%)" },
-  { label: "Azul", css: "hsl(210, 100%, 93%)" },
-  { label: "Verde", css: "hsl(140, 60%, 90%)" },
-  { label: "Rosa", css: "hsl(330, 80%, 93%)" },
-  { label: "Roxo", css: "hsl(270, 60%, 93%)" },
-  { label: "Laranja", css: "hsl(25, 90%, 92%)" },
-  { label: "Vermelho", css: "hsl(0, 80%, 93%)" },
-  { label: "Cinza", css: "hsl(0, 0%, 93%)" },
+  { label: "Nenhum", value: "transparent", css: "transparent" },
+  { label: "Amarelo", value: "", css: "hsl(45, 93%, 90%)" },
+  { label: "Azul", value: "", css: "hsl(210, 100%, 93%)" },
+  { label: "Verde", value: "", css: "hsl(140, 60%, 90%)" },
+  { label: "Rosa", value: "", css: "hsl(330, 80%, 93%)" },
+  { label: "Roxo", value: "", css: "hsl(270, 60%, 93%)" },
+  { label: "Laranja", value: "", css: "hsl(25, 90%, 92%)" },
+  { label: "Vermelho", value: "", css: "hsl(0, 80%, 93%)" },
+  { label: "Cinza", value: "", css: "hsl(0, 0%, 93%)" },
 ];
 
 const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
