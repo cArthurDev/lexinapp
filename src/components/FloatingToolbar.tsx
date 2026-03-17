@@ -110,10 +110,17 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
             {TEXT_COLORS.map((c) => (
               <button
                 key={c.value}
-                onClick={() => { exec("foreColor", c.value); setShowTextColors(false); }}
+                onClick={() => {
+                  if (c.value === "inherit") {
+                    exec("removeFormat");
+                  } else {
+                    exec("foreColor", c.value);
+                  }
+                  setShowTextColors(false);
+                }}
                 title={c.label}
-                className="w-7 h-7 rounded-full border-2 border-border hover:border-primary hover:scale-110 transition-all"
-                style={{ backgroundColor: c.value === "inherit" ? "currentColor" : c.value }}
+                className="w-7 h-7 rounded-full border-2 border-border hover:border-primary hover:scale-110 transition-all relative overflow-hidden"
+                style={{ backgroundColor: c.value === "inherit" ? "hsl(var(--foreground))" : c.value }}
               />
             ))}
           </div>
