@@ -133,10 +133,17 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
             {BG_COLORS.map((c) => (
               <button
                 key={c.label}
-                onClick={() => { exec("hiliteColor", c.css); setShowBgColors(false); }}
+                onClick={() => {
+                  if (c.css === "transparent") {
+                    exec("hiliteColor", "rgba(0,0,0,0)");
+                  } else {
+                    exec("hiliteColor", c.css);
+                  }
+                  setShowBgColors(false);
+                }}
                 title={c.label}
                 className="w-7 h-7 rounded-full border-2 border-border hover:border-primary hover:scale-110 transition-all"
-                style={{ backgroundColor: c.css }}
+                style={{ backgroundColor: c.css === "transparent" ? "hsl(var(--background))" : c.css }}
               />
             ))}
           </div>
