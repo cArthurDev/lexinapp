@@ -106,7 +106,7 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
           <Palette className="w-4 h-4" />
         </ToolBtn>
         {showTextColors && (
-          <div className="absolute top-full left-0 mt-1 bg-popover border border-border rounded-lg shadow-lg p-2 grid grid-cols-5 gap-1.5">
+          <div className="absolute top-full left-0 mt-1 bg-popover border border-border rounded-xl shadow-lg p-3 grid grid-cols-5 gap-3">
             {TEXT_COLORS.map((c) => (
               <button
                 key={c.value}
