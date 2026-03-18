@@ -12,6 +12,10 @@ import {
   Quote,
   Palette,
   Highlighter,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  AlignJustify,
 } from "lucide-react";
 
 interface FloatingToolbarProps {
@@ -31,15 +35,15 @@ const TEXT_COLORS = [
 ];
 
 const BG_COLORS = [
-  { label: "Nenhum", value: "transparent" },
-  { label: "Amarelo", css: "hsl(45, 93%, 90%)" },
-  { label: "Azul", css: "hsl(210, 100%, 93%)" },
-  { label: "Verde", css: "hsl(140, 60%, 90%)" },
-  { label: "Rosa", css: "hsl(330, 80%, 93%)" },
-  { label: "Roxo", css: "hsl(270, 60%, 93%)" },
-  { label: "Laranja", css: "hsl(25, 90%, 92%)" },
-  { label: "Vermelho", css: "hsl(0, 80%, 93%)" },
-  { label: "Cinza", css: "hsl(0, 0%, 93%)" },
+  { label: "Nenhum", value: "transparent", css: "transparent" },
+  { label: "Amarelo", value: "", css: "hsl(45, 93%, 90%)" },
+  { label: "Azul", value: "", css: "hsl(210, 100%, 93%)" },
+  { label: "Verde", value: "", css: "hsl(140, 60%, 90%)" },
+  { label: "Rosa", value: "", css: "hsl(330, 80%, 93%)" },
+  { label: "Roxo", value: "", css: "hsl(270, 60%, 93%)" },
+  { label: "Laranja", value: "", css: "hsl(25, 90%, 92%)" },
+  { label: "Vermelho", value: "", css: "hsl(0, 80%, 93%)" },
+  { label: "Cinza", value: "", css: "hsl(0, 0%, 93%)" },
 ];
 
 const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
@@ -54,6 +58,11 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
 
   const formatBlock = (tag: string) => {
     document.execCommand("formatBlock", false, tag);
+  };
+
+  const closeDropdowns = () => {
+    setShowTextColors(false);
+    setShowBgColors(false);
   };
 
   return (
@@ -80,6 +89,14 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
 
       <div className="w-px h-5 bg-border mx-0.5" />
 
+      {/* Alignment */}
+      <ToolBtn onClick={() => exec("justifyLeft")} title="Alinhar à esquerda"><AlignLeft className="w-4 h-4" /></ToolBtn>
+      <ToolBtn onClick={() => exec("justifyCenter")} title="Centralizar"><AlignCenter className="w-4 h-4" /></ToolBtn>
+      <ToolBtn onClick={() => exec("justifyRight")} title="Alinhar à direita"><AlignRight className="w-4 h-4" /></ToolBtn>
+      <ToolBtn onClick={() => exec("justifyFull")} title="Justificar"><AlignJustify className="w-4 h-4" /></ToolBtn>
+
+      <div className="w-px h-5 bg-border mx-0.5" />
+
       {/* Text color */}
       <div className="relative">
         <ToolBtn
@@ -89,16 +106,22 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
           <Palette className="w-4 h-4" />
         </ToolBtn>
         {showTextColors && (
-          <div className="absolute top-full left-0 mt-1 bg-popover border border-border rounded-lg shadow-lg p-2 grid grid-cols-3 gap-1 min-w-[140px]">
+          <div className="absolute top-full left-0 mt-1 bg-popover border border-border rounded-xl shadow-lg p-3 grid grid-cols-5 gap-3">
             {TEXT_COLORS.map((c) => (
               <button
                 key={c.value}
-                onClick={() => { exec("foreColor", c.value); setShowTextColors(false); }}
-                className="flex items-center gap-1.5 px-2 py-1 rounded text-xs hover:bg-accent transition-colors"
-              >
-                <span className="w-3 h-3 rounded-full border border-border" style={{ backgroundColor: c.value === "inherit" ? "currentColor" : c.value }} />
-                {c.label}
-              </button>
+                onClick={() => {
+                  if (c.value === "inherit") {
+                    exec("removeFormat");
+                  } else {
+                    exec("foreColor", c.value);
+                  }
+                  setShowTextColors(false);
+                }}
+                title={c.label}
+                className="w-7 h-7 rounded-full border-2 border-border hover:border-primary hover:scale-110 transition-all relative overflow-hidden"
+                style={{ backgroundColor: c.value === "inherit" ? "hsl(var(--foreground))" : c.value }}
+              />
             ))}
           </div>
         )}
@@ -113,16 +136,22 @@ const FloatingToolbar: React.FC<FloatingToolbarProps> = ({ position }) => {
           <Highlighter className="w-4 h-4" />
         </ToolBtn>
         {showBgColors && (
-          <div className="absolute top-full right-0 mt-1 bg-popover border border-border rounded-lg shadow-lg p-2 grid grid-cols-3 gap-1 min-w-[140px]">
+          <div className="absolute top-full right-0 mt-1 bg-popover border border-border rounded-xl shadow-lg p-3 grid grid-cols-5 gap-3">
             {BG_COLORS.map((c) => (
               <button
                 key={c.label}
-                onClick={() => { exec("hiliteColor", c.css || c.value); setShowBgColors(false); }}
-                className="flex items-center gap-1.5 px-2 py-1 rounded text-xs hover:bg-accent transition-colors"
-              >
-                <span className="w-3 h-3 rounded border border-border" style={{ backgroundColor: c.css || c.value }} />
-                {c.label}
-              </button>
+                onClick={() => {
+                  if (c.css === "transparent") {
+                    exec("hiliteColor", "rgba(0,0,0,0)");
+                  } else {
+                    exec("hiliteColor", c.css);
+                  }
+                  setShowBgColors(false);
+                }}
+                title={c.label}
+                className="w-7 h-7 rounded-full border-2 border-border hover:border-primary hover:scale-110 transition-all"
+                style={{ backgroundColor: c.css === "transparent" ? "hsl(var(--background))" : c.css }}
+              />
             ))}
           </div>
         )}
