@@ -30,6 +30,7 @@ import FloatingToolbar from "@/components/FloatingToolbar";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import logo from "../../images/Logo.png";
 
 interface WorkspaceProps {
   onLogout: () => void;
@@ -199,7 +200,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
               <ArrowLeft className="w-4 h-4" />
             </button>
           )}
-          <span className="text-sm font-semibold text-primary">Lexin</span>
+          <img src={logo} alt="Logo Lexin" className="h-6 w-auto" />
           {view === "module" && activeModule && (
             <span className="text-sm text-muted-foreground">/ {activeModule.icon} {activeModule.name}</span>
           )}
