@@ -200,7 +200,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
               <ArrowLeft className="w-4 h-4" />
             </button>
           )}
-          <img src={logo} alt="Logo Lexin" className="h-6 w-auto" />
+          <img src={logo} alt="Logo Lexin" className="h-7 w-auto" />
           {view === "module" && activeModule && (
             <span className="text-sm text-muted-foreground">/ {activeModule.icon} {activeModule.name}</span>
           )}

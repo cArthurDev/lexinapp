@@ -28,7 +28,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="w-full max-w-sm mx-4">
         <div className="flex flex-col items-center mb-8">
-          <img src={logo} alt="Logo Lexin" className="h-14 w-auto mb-3" />
+          <img src={logo} alt="Logo Lexin" className="h-16 w-auto mb-3" />
           <p className="text-sm text-muted-foreground mt-1">Entre para continuar</p>
         </div>
 
