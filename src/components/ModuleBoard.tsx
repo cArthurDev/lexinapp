@@ -65,7 +65,7 @@ const ModuleBoard: React.FC<ModuleBoardProps> = ({
                 onClick={() => !isEditing && onOpenModule(mod.id)}
                 className={cn(
                   "group relative rounded-xl bg-gradient-to-b from-purple-500/50 to-transparent p-[1px] cursor-pointer transition-all duration-300",
-                  "hover:scale-105 hover:shadow-[0_0_35px_rgba(168,85,247,0.45)]"
+                  "hover:scale-105 hover:shadow-[0_0_26px_rgba(217,70,239,0.75),0_0_62px_rgba(168,85,247,0.5)]"
                 )}
               >
                 <div className="premium-glass-card relative h-full p-5">
@@ -76,10 +76,10 @@ const ModuleBoard: React.FC<ModuleBoardProps> = ({
 
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-2">
-                      <div className="grid h-10 w-10 place-items-center rounded-lg bg-purple-900/20 text-purple-400 shadow-[0_0_18px_rgba(192,38,211,0.45)]">
+                      <div className="grid h-10 w-10 place-items-center rounded-lg bg-purple-900/35 text-fuchsia-300 shadow-[0_0_30px_rgba(217,70,239,0.85)]">
                         <Sparkles className="w-4 h-4" />
                       </div>
-                      <span className="text-2xl drop-shadow-[0_0_12px_rgba(217,70,239,0.35)]">{mod.icon}</span>
+                      <span className="text-2xl drop-shadow-[0_0_18px_rgba(217,70,239,0.7)]">{mod.icon}</span>
                     </div>
 
                     <div className="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -126,7 +126,7 @@ const ModuleBoard: React.FC<ModuleBoardProps> = ({
                   <div className="mt-4">
                     <button
                       onClick={(e) => { e.stopPropagation(); onOpenModule(mod.id); }}
-                      className="inline-flex items-center gap-1 rounded-md border border-purple-300/20 px-2.5 py-1 text-xs font-medium text-purple-200 transition-all hover:border-purple-300/40 hover:text-white"
+                      className="inline-flex items-center gap-1 rounded-md border border-purple-300/25 px-2.5 py-1 text-xs font-medium text-purple-100 transition-all hover:border-fuchsia-300/60 hover:text-white hover:shadow-[0_0_20px_rgba(217,70,239,0.55)]"
                     >
                       Acessar <ArrowRight className="w-3.5 h-3.5" />
                     </button>

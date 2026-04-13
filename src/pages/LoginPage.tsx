@@ -26,7 +26,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-[#0a0a0a] px-4">
-      <div className="pointer-events-none absolute -top-24 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-purple-700/25 blur-3xl" />
+      <div className="pointer-events-none absolute -top-24 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-fuchsia-500/30 blur-3xl" />
 
       <div className="w-full max-w-sm mx-4 rounded-2xl bg-gradient-to-b from-purple-500/45 to-transparent p-[1px]">
         <div className="premium-glass-card rounded-2xl p-6">
@@ -59,7 +59,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
             />
           </div>
           {error && <p className="text-sm text-destructive">{error}</p>}
-          <Button type="submit" className="w-full shadow-[0_0_16px_rgba(168,85,247,0.35)]">
+          <Button type="submit" className="w-full shadow-[0_0_24px_rgba(217,70,239,0.72),0_0_42px_rgba(168,85,247,0.45)] hover:shadow-[0_0_30px_rgba(217,70,239,0.9),0_0_56px_rgba(168,85,247,0.6)]">
             Entrar
           </Button>
         </form>

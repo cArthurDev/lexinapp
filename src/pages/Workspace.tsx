@@ -192,8 +192,8 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
 
   return (
     <div className="relative flex h-screen flex-col overflow-hidden bg-[#0a0a0a]">
-      <div className="pointer-events-none absolute -top-40 -left-32 h-96 w-96 rounded-full bg-purple-700/20 blur-3xl" />
-      <div className="pointer-events-none absolute -top-24 right-0 h-80 w-80 rounded-full bg-fuchsia-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute -top-40 -left-32 h-96 w-96 rounded-full bg-purple-600/30 blur-3xl" />
+      <div className="pointer-events-none absolute -top-24 right-0 h-80 w-80 rounded-full bg-fuchsia-500/20 blur-3xl" />
 
       {/* Top bar */}
       <header className="relative z-10 h-12 border-b border-purple-300/15 flex items-center justify-between px-4 shrink-0 bg-black/35 backdrop-blur-md">
@@ -279,7 +279,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
             ) : (
               <div className="space-y-2">
                 {modulePages.map((page) => (
-                  <div key={page.id} className="group rounded-xl bg-gradient-to-b from-purple-500/45 to-transparent p-[1px] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(168,85,247,0.35)]">
+                  <div key={page.id} className="group rounded-xl bg-gradient-to-b from-purple-500/55 to-transparent p-[1px] transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_24px_rgba(217,70,239,0.72),0_0_52px_rgba(168,85,247,0.5)]">
                     <div
                       onClick={() => handleOpenPage(page.id)}
                       className="premium-glass-card flex items-center gap-3 p-3 cursor-pointer"
