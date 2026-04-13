@@ -191,12 +191,15 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-background">
+    <div className="relative flex h-screen flex-col overflow-hidden bg-[#0a0a0a]">
+      <div className="pointer-events-none absolute -top-40 -left-32 h-96 w-96 rounded-full bg-purple-700/20 blur-3xl" />
+      <div className="pointer-events-none absolute -top-24 right-0 h-80 w-80 rounded-full bg-fuchsia-500/10 blur-3xl" />
+
       {/* Top bar */}
-      <header className="h-12 border-b border-border flex items-center justify-between px-4 shrink-0 bg-background">
+      <header className="relative z-10 h-12 border-b border-purple-300/15 flex items-center justify-between px-4 shrink-0 bg-black/35 backdrop-blur-md">
         <div className="flex items-center gap-3">
           {view !== "board" && (
-            <button onClick={handleBack} className="p-1.5 rounded hover:bg-accent text-muted-foreground transition-colors">
+            <button onClick={handleBack} className="p-1.5 rounded-md hover:bg-white/10 text-muted-foreground transition-colors">
               <ArrowLeft className="w-4 h-4" />
             </button>
           )}
@@ -222,18 +225,18 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
         <div className="flex items-center gap-1">
           {view === "editor" && (
             <>
-              <Button variant="ghost" size="sm" onClick={handleSave} className="gap-1.5 text-foreground">
+              <Button variant="ghost" size="sm" onClick={handleSave} className="gap-1.5 text-foreground hover:bg-white/10">
                 <Save className="w-4 h-4" /> Salvar
               </Button>
-              <Button variant="ghost" size="sm" onClick={handleExportPdf} className="gap-1.5 text-foreground">
+              <Button variant="ghost" size="sm" onClick={handleExportPdf} className="gap-1.5 text-foreground hover:bg-white/10">
                 <Download className="w-4 h-4" /> PDF
               </Button>
             </>
           )}
-          <button onClick={() => setSerifMode(!serifMode)} title="Fonte serif" className="p-1.5 rounded hover:bg-accent text-muted-foreground transition-colors">
+          <button onClick={() => setSerifMode(!serifMode)} title="Fonte serif" className="p-1.5 rounded-md hover:bg-white/10 text-muted-foreground transition-colors">
             <Type className="w-4 h-4" />
           </button>
-          <button onClick={handleLogout} title="Sair" className="p-1.5 rounded hover:bg-accent text-muted-foreground transition-colors">
+          <button onClick={handleLogout} title="Sair" className="p-1.5 rounded-md hover:bg-white/10 text-muted-foreground transition-colors">
             <LogOut className="w-4 h-4" />
           </button>
         </div>
@@ -251,7 +254,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
       )}
 
       {view === "module" && (
-        <div className="flex-1 overflow-y-auto p-8">
+        <div className="relative z-10 flex-1 overflow-y-auto p-8">
           <div className="max-w-3xl mx-auto">
             <div className="flex items-center justify-between mb-6">
               <div>
@@ -260,7 +263,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
                 </h2>
                 <p className="text-sm text-muted-foreground mt-1">{modulePages.length} {modulePages.length === 1 ? "nota" : "notas"}</p>
               </div>
-              <Button onClick={handleNewPage} size="sm" className="gap-1.5">
+              <Button onClick={handleNewPage} size="sm" className="gap-1.5 shadow-[0_0_16px_rgba(168,85,247,0.35)]">
                 <Plus className="w-4 h-4" /> Nova nota
               </Button>
             </div>
@@ -276,24 +279,25 @@ const Workspace: React.FC<WorkspaceProps> = ({ onLogout }) => {
             ) : (
               <div className="space-y-2">
                 {modulePages.map((page) => (
-                  <div
-                    key={page.id}
-                    onClick={() => handleOpenPage(page.id)}
-                    className="group flex items-center gap-3 p-3 rounded-lg border border-border bg-card cursor-pointer transition-all hover:shadow-sm hover:border-primary/20"
-                  >
-                    <span className="text-xl">{page.icon}</span>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-foreground text-sm truncate">{page.title}</h4>
-                      <p className="text-xs text-muted-foreground">
-                        Editado {new Date(page.updatedAt).toLocaleDateString("pt-BR")}
-                      </p>
-                    </div>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); handleDeletePage(page.id); }}
-                      className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-opacity"
+                  <div key={page.id} className="group rounded-xl bg-gradient-to-b from-purple-500/45 to-transparent p-[1px] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(168,85,247,0.35)]">
+                    <div
+                      onClick={() => handleOpenPage(page.id)}
+                      className="premium-glass-card flex items-center gap-3 p-3 cursor-pointer"
                     >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                      <span className="text-xl">{page.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-white text-sm truncate">{page.title}</h4>
+                        <p className="text-xs text-slate-300">
+                          Editado {new Date(page.updatedAt).toLocaleDateString("pt-BR")}
+                        </p>
+                      </div>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleDeletePage(page.id); }}
+                        className="opacity-0 group-hover:opacity-100 p-1 rounded-md hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-opacity"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
